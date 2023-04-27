@@ -1,5 +1,6 @@
 import logo from './logo.svg';
-import { useState } from 'react';
+//import { useState } from 'react';
+import React, {useState} from 'react'; 
 import { supabase } from './supabaseClient';
 import './App.css';
 
@@ -12,12 +13,12 @@ function radiationExample() {
      .select('*')
     setRadiationExample(radiation);
   }
-  getBooks();
+  getRadiation();
   
   return (
-    <table className="favorite-books">
+    <table className="radiation-example">
       {
-        myBooks.map(portion => (
+        myRadiation.map(portion => (
           <tr>
             <td>{portion.month}</td>
             <td>{portion.peaksunlight}</td>
