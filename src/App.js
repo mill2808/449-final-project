@@ -5,13 +5,13 @@ import { supabase } from './supabaseClient';
 import './App.css';
 
 
-function radiationExample() {
-  const [myRadiation, setRadiationExample] = useState([]);
+function RadiationExample() {
+  const [myRadiation, setMyRadiation] = useState([]);
   async function getRadiation() {
     let { data: radiation} = await supabase
      .from('radiation')
      .select('*')
-    setRadiationExample(radiation);
+    setMyRadiation(radiation);
   }
   getRadiation();
   
@@ -48,8 +48,8 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <radiationExample/>
-        <OrderButton/>
+        <RadiationExample />
+        <OrderButton />
         <a
           className="App-link"
           href="https://reactjs.org"

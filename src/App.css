@@ -14,14 +14,14 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #fefeff;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: rgb(42, 40, 40);
 }
 
 .App-link {
@@ -35,4 +35,21 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+h1 {
+  font-family: copperplate;
+}
+
+.radiation-example {
+  font-family: fantasy;
+  background-color: #FDEFB2;
+  padding: 5px;
+  text-align: center;
+}
+
+ tr:hover {background-color: #F9E076;}
+  
+ td {
+  border-bottom: 2px solid #fefeff;
 }
