@@ -29,6 +29,26 @@ function RadiationExample() {
   )
 }
 
+function UserInput(){
+  const [username, setName] = useState('');
+  const [location, setLocation] = useState('');
+
+
+const submissionForm = (e) => {
+  e.preventDefault();
+}
+
+return (
+  <form onSubmit = {submissionForm}>
+    <label>Name: </label>
+    <input type="text" value={username} onChange={(e) => setName(e.target.value)} />
+    <label>Area Code: </label>
+    <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} />
+
+    <button type="submit">Submit for Weather Results</button>
+  </form>
+)
+}
 
 function OrderButton() {
   const [count, setCount] = useState(0);
@@ -49,6 +69,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <RadiationExample />
+        <p><UserInput /></p>
         <OrderButton />
         <a
           className="App-link"
