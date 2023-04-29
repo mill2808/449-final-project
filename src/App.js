@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 //import { useState } from 'react';
-import React, {useState, useEffect} from 'react'; 
+import React, { useState } from 'react'; 
 import { supabase } from './supabaseClient';
 import './App.css';
 
@@ -29,8 +29,17 @@ function RadiationExample() {
   )
 }
 
+function locationForm() {
+  const [location, setLocation] = useState('');
+  const afterSubmit = (e) => {
+    e.preventDefault();
 
-function NRELdata(){
+  }
+}
+
+
+
+/*function NRELdata(){
   const [radiationData, setRadiationData] = useState(null); //ChatGPT was used to form "null" in this line ???
   const [location, setLocation] = useState('');
   const nrelApiKey = 'D8gR01Rx7RTEftnzzqfpIGWaPq27AeMyUHl184Qu';
@@ -71,7 +80,7 @@ function NRELdata(){
       )}
     </div>
   );
-}
+} */
 
 
 function OrderButton() {
@@ -94,7 +103,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <RadiationExample />
-        <NRELdata/>
+        <locationForm />
         <OrderButton />
         <a
           className="App-link"
