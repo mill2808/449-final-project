@@ -2,6 +2,7 @@ import logo from './logo.svg';
 //import { useState } from 'react';
 import React, { useState } from 'react'; 
 import { supabase } from './supabaseClient';
+import axios from 'axios';
 import './App.css';
 
 
@@ -29,14 +30,14 @@ function RadiationExample() {
   )
 }
 
-function locationForm() {
+/*function locationForm() {
   const [location, setLocation] = useState('');
   const afterSubmit = (e) => {
     e.preventDefault();
 
   }
 }
-
+*/
 
 
 /*function NRELdata(){
