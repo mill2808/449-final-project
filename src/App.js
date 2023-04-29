@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 //import { useState } from 'react';
-import React, {useState} from 'react'; 
+import React, {useState, useEffect} from 'react'; 
 import { supabase } from './supabaseClient';
 import './App.css';
 
@@ -29,26 +29,50 @@ function RadiationExample() {
   )
 }
 
-function UserInput(){
-  const [username, setName] = useState('');
+
+function NRELdata(){
+  const [radiationData, setRadiationData] = useState(null); //ChatGPT was used to form "null" in this line ???
   const [location, setLocation] = useState('');
+  const nrelApiKey = 'D8gR01Rx7RTEftnzzqfpIGWaPq27AeMyUHl184Qu';
+  const nrelApiUrl = `https://developer.nrel.gov/api/solar/solar_resource/v1.json?api_key=${nrelApiKey}&zip=${location}`; //ChatGPT showed how to add location into this constant (via zip parameter) to incorporate user input from my form
 
+  useEffect(() => {
+    fetch(nrelApiUrl)
+      .then(response => response.json())
+      .then(data => setRadiationData(data))
+      .catch(error => console.log(error));
+  }, [nrelApiUrl]);
 
-const submissionForm = (e) => {
-  e.preventDefault();
+  // chatGPT was used for the following constant, using handleSubmit to update location based on user input
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setLocation(event.target.location.value);  
+  }
+  
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Enter your Area Code:
+          <input type="text" name="location"/>
+        </label>
+        <button type="submit">Submit for Weather Results</button>
+      </form>
+
+      {radiationData ? (
+        <div>
+          <h2>Solar Radiation</h2>
+          <p>Latitiude: {radiationData.inputs.latitude}</p>
+          <p>Longitutde: {radiationData.inputs.longitude}</p>
+          <p>Average Solar Radiation per Day: {radiationData.outputs.avg_dni.annual} kWh/m²/day</p>
+        </div>
+      ) : (
+        <p>Loading radiation data...</p>
+      )}
+    </div>
+  );
 }
 
-return (
-  <form onSubmit = {submissionForm}>
-    <label>Name: </label>
-    <input type="text" value={username} onChange={(e) => setName(e.target.value)} />
-    <label>Area Code: </label>
-    <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} />
-
-    <button type="submit">Submit for Weather Results</button>
-  </form>
-)
-}
 
 function OrderButton() {
   const [count, setCount] = useState(0);
@@ -63,13 +87,14 @@ function OrderButton() {
   )
 }
 
+
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <RadiationExample />
-        <p><UserInput /></p>
+        <NRELdata/>
         <OrderButton />
         <a
           className="App-link"
