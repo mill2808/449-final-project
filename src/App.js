@@ -1,8 +1,8 @@
 import logo from './logo.svg';
 //import { useState } from 'react';
-import React, { useState } from 'react'; 
+import React, { useState, useEffect } from 'react'; 
 import { supabase } from './supabaseClient';
-import axios from 'axios';
+//import axios from 'axios';
 import './App.css';
 
 
@@ -37,10 +37,36 @@ function RadiationExample() {
 
   }
 }
+
+function Nrel(){
+  const [location, setLocation] = useState('');
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const apiUrl = `https://developer.nrel.gov/api/solar/solar_resource/v1.json';
+
+
+    axios.get(apiUrl, {
+      params: {
+        api_key: 'D8gR01Rx7RTEftnzzqfpIGWaPq27AeMyUHl184Qu',
+        location: '${location}',
+        fuel_type: 'ELEC',
+        access: 'public'
+      }
+    })
+       .then(response => {
+       // Handle the API response
+      })
+      .catch(error => {
+        console.error(error);
+      // Handle any errors
+      });
+
+}; }
 */
 
-
-/*function NRELdata(){
+/*
+function NRELdata(){
   const [radiationData, setRadiationData] = useState(null); //ChatGPT was used to form "null" in this line ???
   const [location, setLocation] = useState('');
   const nrelApiKey = 'D8gR01Rx7RTEftnzzqfpIGWaPq27AeMyUHl184Qu';
@@ -83,6 +109,55 @@ function RadiationExample() {
   );
 } */
 
+// FINAL ATTEMPT WEATHER DASHBOARD
+
+/*
+function WeatherDashboard() {
+  // function to get area code data
+  function MyForm() {
+    const [areaCode, setAreaCode] = useState('');
+    const handleSubmit = (e) => {
+      e.preventDefault();
+  
+      // handle form submission here
+    };
+    return (
+      <form>
+        <label>Area Code:</label>
+        <input type="text" value={areaCode} onChange={(e) => setAreaCode(e.target.value)} />
+        <button type="submit">Submit</button>
+      </form>
+    );
+  }
+  // start of weather dashboard 
+  const [weatherData, setWeatherData] = useState(null); //this must say null, empty array doesn't work
+  const apiKey = 'D8gR01Rx7RTEftnzzqfpIGWaPq27AeMyUHl184Qu';
+  const apiUrl = `https://developer.nrel.gov/api/solar/solar_resource/v1.json?api_key=${apiKey}&lat=40&lon=-105`;
+
+  useEffect(() => {
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(data => setWeatherData(data))
+      .catch(error => console.log(error));
+  }, []);
+
+  return (
+    <div>
+      {weatherData ? (
+        <div>
+          <h2>Solar Radiation Data</h2>
+          <p>Latitude: {weatherData.inputs.latitude}</p>
+          <p>Longitude: {weatherData.inputs.longitude}</p>
+          <p>Solar Radiation: {weatherData.outputs.avg_dni.annual} kWh/m²/day</p>
+        </div>
+      ) : (
+        <p>Loading weather data...</p>
+      )}
+    </div>
+  );
+}
+*/
+
 
 function OrderButton() {
   const [count, setCount] = useState(0);
@@ -104,8 +179,9 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <RadiationExample />
-        <locationForm />
         <OrderButton />
+        <MyForm />
+        <WeatherDashboard />
         <a
           className="App-link"
           href="https://reactjs.org"
