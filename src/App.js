@@ -2,7 +2,7 @@ import logo from './logo.svg';
 //import { useState } from 'react';
 import React, { useState } from 'react'; 
 import { supabase } from './supabaseClient';
-import axios from 'axios';
+//import axios from 'axios';
 import './App.css';
 
 
@@ -301,7 +301,6 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <RadiationExample />
         <OrderButton />
-        <SolarRadiationDashboard />
         <a
           className="App-link"
           href="https://reactjs.org"
