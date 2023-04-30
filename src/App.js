@@ -1,8 +1,8 @@
 import logo from './logo.svg';
 //import { useState } from 'react';
-import React, { useState, useEffect } from 'react'; 
+import React, { useState } from 'react'; 
 import { supabase } from './supabaseClient';
-//import axios from 'axios';
+import axios from 'axios';
 import './App.css';
 
 
@@ -29,6 +29,39 @@ function RadiationExample() {
     </table>
   )
 }
+
+/*function AttemptFour() {
+  const [weather, setWeather] = useState({})
+  const [location, setLocation] = useState('')
+  const url = 'https://developer.nrel.gov/api/solar/solar_resource/v1.json';
+
+  const searchLocation = (event) => {
+    if (event.key === 'Enter') {
+      axios.get(url).then((response) => {
+        setWeather(response.weather)
+        console.log(response.weather)
+      })
+      setLocation('')
+    }
+  }
+
+  return (
+    < div className="solarDataApp">
+      <div className="inputBox">
+        <input 
+          value={location}
+          onChange={event => setLocation(event.target.value)}
+          onKeyPress={searchLocation}
+          placeholder='Please insert area code'
+          type="text"/>
+      </div>
+
+    </div>
+
+  )
+}
+/*
+
 
 /*function locationForm() {
   const [location, setLocation] = useState('');
@@ -158,6 +191,94 @@ function WeatherDashboard() {
 }
 */
 
+/*
+const SolarRadiationDashboard = () => {
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setLongitude] = useState('');
+  const [monthlyAverages, setMonthlyAverages] = useState([]);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const response = await axios.get(
+      'https://developer.nrel.gov/api/solar/solar_resource/v1.json',
+      {
+        params: {
+          api_key: 'D8gR01Rx7RTEftnzzqfpIGWaPq27AeMyUHl184Qu',
+          lat: latitude,
+          lon: longitude,
+        },
+      }
+    );
+    const monthlyData = response.data.results.reduce((acc, hourlyData) => {
+      const month = new Date(hourlyData.date_time).getMonth();
+      if (!acc[month]) {
+        acc[month] = {
+          total: 0,
+          count: 0,
+        };
+      }
+      acc[month].total += hourlyData['ghi'];
+      acc[month].count += 1;
+      return acc;
+    }, {});
+    const monthlyAverages = Object.keys(monthlyData).map((month) => ({
+      month: new Date(0, month).toLocaleString('default', { month: 'long' }),
+      average: monthlyData[month].total / monthlyData[month].count,
+    }));
+    setMonthlyAverages(monthlyAverages);
+  };
+
+  return (
+    <div>
+      <h1>Solar Radiation Dashboard</h1>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Latitude:
+          <input
+            type="number"
+            step="0.0001"
+            value={latitude}
+            onChange={(event) => setLatitude(event.target.value)}
+            required
+          />
+        </label>
+        <br />
+        <label>
+          Longitude:
+          <input
+            type="number"
+            step="0.0001"
+            value={longitude}
+            onChange={(event) => setLongitude(event.target.value)}
+            required
+          />
+        </label>
+        <br />
+        <button type="submit">Submit</button>
+      </form>
+      {monthlyAverages.length > 0 && (
+        <table>
+          <thead>
+            <tr>
+              <th>Month</th>
+              <th>Average Solar Radiation (kWh/m^2/day)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {monthlyAverages.map(({ month, average }) => (
+              <tr key={month}>
+                <td>{month}</td>
+                <td>{average.toFixed(2)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
+};
+*/
+
 
 function OrderButton() {
   const [count, setCount] = useState(0);
@@ -180,8 +301,7 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <RadiationExample />
         <OrderButton />
-        <MyForm />
-        <WeatherDashboard />
+        <SolarRadiationDashboard />
         <a
           className="App-link"
           href="https://reactjs.org"
